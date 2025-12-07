@@ -1,0 +1,65 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#1a1a2e"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="Arial" font-weight="bold">
+    ROS 2 Architecture
+  </text>
+
+  <!-- Nodes -->
+  <rect x="100" y="100" width="120" height="60" rx="10" fill="#2d1b69" stroke="#7048e8" stroke-width="2"/>
+  <text x="160" y="135" text-anchor="middle" fill="#39ff14" font-size="14" font-family="Arial">Navigation Node</text>
+
+  <rect x="340" y="100" width="120" height="60" rx="10" fill="#2d1b69" stroke="#7048e8" stroke-width="2"/>
+  <text x="400" y="135" text-anchor="middle" fill="#39ff14" font-size="14" font-family="Arial">Sensor Node</text>
+
+  <rect x="580" y="100" width="120" height="60" rx="10" fill="#2d1b69" stroke="#7048e8" stroke-width="2"/>
+  <text x="640" y="135" text-anchor="middle" fill="#39ff14" font-size="14" font-family="Arial">Controller Node</text>
+
+  <!-- DDS Middleware -->
+  <ellipse cx="400" cy="300" rx="150" ry="60" fill="#1e1e2e" stroke="#7048e8" stroke-width="2"/>
+  <text x="400" y="305" text-anchor="middle" fill="#39ff14" font-size="16" font-family="Arial" font-weight="bold">
+    DDS Middleware
+  </text>
+
+  <!-- Topics -->
+  <rect x="200" y="220" width="100" height="40" rx="5" fill="#1e1e2e" stroke="#a78bfa" stroke-width="1"/>
+  <text x="250" y="245" text-anchor="middle" fill="#39ff14" font-size="12" font-family="Arial">/cmd_vel</text>
+
+  <rect x="400" y="220" width="100" height="40" rx="5" fill="#1e1e2e" stroke="#a78bfa" stroke-width="1"/>
+  <text x="450" y="245" text-anchor="middle" fill="#39ff14" font-size="12" font-family="Arial">/sensor_data</text>
+
+  <rect x="500" y="220" width="100" height="40" rx="5" fill="#1e1e2e" stroke="#a78bfa" stroke-width="1"/>
+  <text x="550" y="245" text-anchor="middle" fill="#39ff14" font-size="12" font-family="Arial">/robot_state</text>
+
+  <!-- Arrows for communication -->
+  <!-- From Navigation to DDS -->
+  <line x1="160" y1="160" x2="320" y2="250" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="320" y1="250" x2="400" y2="270" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- From Sensor to DDS -->
+  <line x1="400" y1="160" x2="400" y2="240" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- From Controller to DDS -->
+  <line x1="640" y1="160" x2="500" y2="250" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="500" y1="250" x2="400" y2="270" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrowhead definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7"
+      refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#39ff14"/>
+    </marker>
+  </defs>
+
+  <!-- Legend -->
+  <rect x="50" y="450" width="250" height="120" fill="#1e1e2e" stroke="#7048e8" stroke-width="1"/>
+  <text x="60" y="470" fill="#a78bfa" font-size="14" font-family="Arial" font-weight="bold">Legend</text>
+  <circle cx="70" cy="490" r="5" fill="#39ff14"/>
+  <text x="85" y="495" fill="#e2e8f0" font-size="12" font-family="Arial">Communication</text>
+  <rect x="65" y="510" width="10" height="10" fill="#2d1b69" stroke="#7048e8"/>
+  <text x="85" y="520" fill="#e2e8f0" font-size="12" font-family="Arial">ROS 2 Node</text>
+  <ellipse cx="70" cy="545" rx="8" ry="5" fill="#1e1e2e" stroke="#7048e8"/>
+  <text x="85" y="550" fill="#e2e8f0" font-size="12" font-family="Arial">DDS Middleware</text>
+</svg>

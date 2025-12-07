@@ -17,12 +17,12 @@
   --ifm-code-font-size: 95%;
 
   /* Neon accent color */
-  --ifm-color-accent: #39ff14; /* Neon green */
+  --ifm-color-accent: #000000; /* Neon green */
 
   /* Additional theme colors */
   --ifm-color-purple-light: #a78bfa;
   --ifm-color-purple-dark: #5a36d9;
-  --ifm-color-neon: #39ff14;
+  --ifm-color-neon: #000000;
 }
 
 /* Dark theme overrides */
@@ -31,7 +31,7 @@
   --ifm-color-primary-dark: #8e6df0;
   --ifm-color-primary-darker: #8460ed;
   --ifm-color-primary-darkest: #7048e8;
-  --ifm-color-primary-light: #c0b0ff;
+  --ifm-color-primary-light: #ffb0b0ff;
   --ifm-color-primary-lighter: #cbc0ff;
   --ifm-color-primary-lightest: #e0dcff;
 }

@@ -1,0 +1,63 @@
+<svg width="1000" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#1a1a2e"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="Arial" font-weight="bold">
+    Vision-Language-Action (VLA) System
+  </text>
+
+  <!-- Vision Component -->
+  <rect x="100" y="100" width="200" height="120" rx="15" fill="#2d1b69" stroke="#7048e8" stroke-width="2"/>
+  <text x="200" y="125" text-anchor="middle" fill="#39ff14" font-size="14" font-family="Arial" font-weight="bold">Vision</text>
+  <text x="200" y="150" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Camera Input</text>
+  <text x="200" y="170" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Object Detection</text>
+  <text x="200" y="190" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Scene Understanding</text>
+
+  <!-- Language Component -->
+  <rect x="400" y="100" width="200" height="120" rx="15" fill="#2d1b69" stroke="#7048e8" stroke-width="2"/>
+  <text x="500" y="125" text-anchor="middle" fill="#39ff14" font-size="14" font-family="Arial" font-weight="bold">Language</text>
+  <text x="500" y="150" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Natural Language</text>
+  <text x="500" y="170" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Instruction Parsing</text>
+  <text x="500" y="190" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Intent Recognition</text>
+
+  <!-- Action Component -->
+  <rect x="700" y="100" width="200" height="120" rx="15" fill="#2d1b69" stroke="#7048e8" stroke-width="2"/>
+  <text x="800" y="125" text-anchor="middle" fill="#39ff14" font-size="14" font-family="Arial" font-weight="bold">Action</text>
+  <text x="800" y="150" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Motion Planning</text>
+  <text x="800" y="170" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Control Execution</text>
+  <text x="800" y="190" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Robot Control</text>
+
+  <!-- Fusion Layer -->
+  <rect x="350" y="280" width="300" height="100" rx="15" fill="#1e1e2e" stroke="#a78bfa" stroke-width="2"/>
+  <text x="500" y="310" text-anchor="middle" fill="#39ff14" font-size="16" font-family="Arial" font-weight="bold">Multimodal Fusion</text>
+  <text x="500" y="335" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Cross-Modal Attention</text>
+  <text x="500" y="355" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="Arial">• Joint Embedding Space</text>
+
+  <!-- Robot Output -->
+  <rect x="450" y="420" width="100" height="60" rx="10" fill="#2d1b69" stroke="#7048e8" stroke-width="2"/>
+  <text x="500" y="450" text-anchor="middle" fill="#39ff14" font-size="12" font-family="Arial">Robot</text>
+  <text x="500" y="465" text-anchor="middle" fill="#39ff14" font-size="12" font-family="Arial">Action</text>
+
+  <!-- Arrows from components to fusion -->
+  <line x1="200" y1="220" x2="400" y2="280" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="500" y1="220" x2="500" y2="280" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="800" y1="220" x2="600" y2="280" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow from fusion to robot -->
+  <line x1="500" y1="380" x2="500" y2="420" stroke="#39ff14" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrowhead definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7"
+      refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#39ff14"/>
+    </marker>
+  </defs>
+
+  <!-- Input/Output labels -->
+  <text x="100" y="80" text-anchor="start" fill="#39ff14" font-size="12" font-family="Arial">Camera Input</text>
+  <text x="400" y="80" text-anchor="start" fill="#39ff14" font-size="12" font-family="Arial">Natural Language Command</text>
+  <text x="700" y="80" text-anchor="start" fill="#39ff14" font-size="12" font-family="Arial">Action Plan</text>
+  <text x="450" y="400" text-anchor="start" fill="#39ff14" font-size="12" font-family="Arial">Robot Action Execution</text>
+</svg>

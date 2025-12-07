@@ -1,0 +1,209 @@
+/**
+ * Custom CSS for Physical AI & Humanoid Robotics textbook
+ * Purple and neon theme
+ */
+
+/* Define CSS variables for the purple/neon theme */
+:root {
+  --ifm-color-primary: #0F172A; /* Purple */
+  --ifm-color-primary-dark: #1E293B; /* Darker purple */
+  --ifm-color-primary-darker: #1E293B; /* Even darker purple */
+  --ifm-color-primary-darkest: #1E293B; /* Darkest purple */
+  --ifm-color-primary-light: #1E293B; /* Lighter purple */
+  --ifm-color-primary-lighter: #1E293B; /* Even lighter purple */
+  --ifm-color-primary-lightest: #1E293B; /* Lightest purple */
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode theme */
+[data-theme='dark']:root {
+  --ifm-color-primary: #9e9191; /* Light purple for dark mode */
+  --ifm-color-primary-dark: #8b5cf6; /* Darker purple for dark mode */
+  --ifm-color-primary-darker: #7c3aed; /* Even darker purple for dark mode */
+  --ifm-color-primary-darkest: #6d28d9; /* Darkest purple for dark mode */
+  --ifm-color-primary-light: #d4d2dd; /* Lighter purple for dark mode */
+  --ifm-color-primary-lighter: #d8b4fe; /* Even lighter purple for dark mode */
+  --ifm-color-primary-lightest: #e9d5ff; /* Lightest purple for dark mode */
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Neon accent color */
+.neon-accent {
+  color: #000000 !important; /* Black */
+  text-shadow: 0 0 5px #000000, 0 0 10px #000000;
+}
+
+/* Apply neon effect to important elements */
+.navbar__title,
+.menu__list-item-collapsible > a,
+.table-of-contents__link--active,
+.table-of-contents__link:hover {
+  color: #000000 !important;
+  /* text-shadow: 0 0 3px #000000; */
+}
+
+/* Custom header styling */
+.header-purple-link,
+.header-purple-link:visited {
+  color: #1E293B;
+}
+
+[data-theme='dark'] .header-purple-link,
+[data-theme='dark'] .header-purple-link:visited {
+  color: #a78bfa;
+}
+
+/* Custom button styling */
+.button--primary {
+  background-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+.button--primary:hover {
+  background-color: #000000;
+  border-color: #000000;
+  color: #000;
+  text-shadow: none;
+}
+
+/* Custom card and container styling */
+.card {
+  border: 1px solid var(--ifm-color-primary-light);
+  box-shadow: 0 4px 6px rgba(112, 72, 232, 0.1);
+}
+
+.card:hover {
+  box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+  border-color: #000000;
+}
+
+/* Custom admonitions for textbook */
+.admonition {
+  border-left: 4px solid var(--ifm-color-primary);
+}
+
+.admonition--note {
+  border-left-color: var(--ifm-color-primary);
+}
+
+.admonition--tip {
+  border-left-color: #000000;
+}
+
+/* Custom sidebar styling */
+.menu {
+  border-right: 1px solid var(--ifm-toc-border-color);
+}
+
+.menu__list-item > a:hover,
+.menu__list-item > a:focus {
+  color: #000000;
+  text-shadow: 0 0 3px #000000;
+}
+
+/* Custom table styling */
+table {
+  border: 1px solid var(--ifm-color-primary-light);
+}
+
+table th {
+  background-color: rgba(112, 72, 232, 0.1);
+}
+
+/* Custom code block styling */
+.code-block {
+  background-color: rgba(112, 72, 232, 0.05);
+  border-left: 3px solid var(--ifm-color-primary);
+}
+
+/* Apply neon effect to inline code */
+code {
+  background-color: rgba(112, 72, 232, 0.1);
+}
+
+/* Custom footer styling */
+.footer {
+  background-color: #bebec5ff;
+  border-top: 1px solid var(--ifm-color-primary-light);
+}
+
+/* Custom highlight for important text */
+.text--important {
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Custom quiz styling */
+.quiz-question {
+  background-color: rgba(112, 72, 232, 0.05);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border-left: 3px solid #000000;
+}
+
+/* Custom heading styling */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--ifm-color-primary);
+}
+
+/* Apply neon glow to main headings */
+h1 {
+  text-shadow: 0 0 5px rgba(253, 253, 253, 0.97);
+}
+
+/* Custom link styling */
+a {
+  color: var(--ifm-color-primary);
+}
+
+a:hover {
+  color: #000000;
+  text-shadow: 0 0 5px #000000;
+}
+
+/* Custom navbar styling */
+.navbar {
+  background-color: #f7fff7;
+  border-bottom: 1px solid var(--ifm-color-primary-light);
+}
+
+/* Custom sidebar styling */
+.sidebar {
+  background-color: #1e1e2e;
+}
+
+/* Custom banner for textbook */
+.textbook-banner {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #000000;
+}
+
+.textbook-banner h1 {
+  color: white;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+}
+
+/* Custom styling for self-check quizzes */
+.self-check-quiz {
+  background-color: #2d1b69;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid #000000;
+  margin: 1.5rem 0;
+}
+
+.self-check-quiz h3 {
+  color: #000000;
+  display: flex;
+  align-items: center;
+}
+
+.self-check-quiz h3::before {
+  content: "📝";
+  margin-right: 0.5rem;
+}
