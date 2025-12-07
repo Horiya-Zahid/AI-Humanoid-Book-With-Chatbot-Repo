@@ -1,0 +1,140 @@
+# API Contract: Embeddings Generation Endpoint
+
+## Endpoint
+`POST /api/embed`
+
+## Description
+Generate embeddings for content chunks. This endpoint is build-time only and protected with authentication. It processes content and stores embeddings in Qdrant.
+
+## Request
+
+### Headers
+```
+Content-Type: application/json
+Authorization: Bearer <BUILD_TOKEN> (required - build-time authentication)
+```
+
+### Body
+```json
+{
+  "chunks": [
+    {
+      "id": "string, required - Unique chunk identifier",
+      "module_id": "string, required - Module identifier",
+      "week_number": "integer, required - Week number in syllabus",
+      "section_path": "string, required - Path to the section",
+      "section_title": "string, required - Title of the section",
+      "content": "string, required - The content to embed (max 500 tokens)",
+      "overlap_start": "integer, optional - Start position of overlap",
+      "overlap_end": "integer, optional - End position of overlap",
+      "source_url": "string, optional - URL reference to original content"
+    }
+  ],
+  "batch_id": "string, optional - Batch identifier for tracking",
+  "overwrite": "boolean, optional - Whether to overwrite existing embeddings (default: false)"
+}
+```
+
+### Example Request
+```json
+{
+  "chunks": [
+    {
+      "id": "chunk_004_11_1_001",
+      "module_id": "004-module-4-vla",
+      "week_number": 11,
+      "section_path": "week-11/chapter-1/vla-introduction",
+      "section_title": "Introduction to Vision-Language-Action Systems",
+      "content": "The vision-language-action pipeline represents the integration of perception, reasoning, and execution in robotic systems...",
+      "overlap_start": 0,
+      "overlap_end": 50,
+      "source_url": "/docs/module-4-vla/week-11/chapter-1"
+    }
+  ],
+  "batch_id": "batch_20251206_001",
+  "overwrite": false
+}
+```
+
+## Response
+
+### Success Response (200 OK)
+```json
+{
+  "status": "success",
+  "batch_id": "string - Batch identifier",
+  "processed_count": "integer - Number of chunks processed",
+  "successful_count": "integer - Number of chunks successfully embedded",
+  "failed_count": "integer - Number of chunks that failed",
+  "failed_chunks": [
+    {
+      "id": "string - Chunk ID that failed",
+      "error": "string - Error message"
+    }
+  ],
+  "collection_name": "string - Name of Qdrant collection used",
+  "processing_time_ms": "integer - Time taken to process in milliseconds"
+}
+```
+
+### Error Response (400 Bad Request)
+```json
+{
+  "error": {
+    "type": "invalid_request_error",
+    "message": "string - Error description"
+  }
+}
+```
+
+### Error Response (401 Unauthorized)
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Build authentication required or invalid token"
+  }
+}
+```
+
+### Error Response (403 Forbidden)
+```json
+{
+  "error": {
+    "type": "forbidden_error",
+    "message": "This endpoint is restricted to build-time operations only"
+  }
+}
+```
+
+### Error Response (429 Rate Limit)
+```json
+{
+  "error": {
+    "type": "rate_limit_error",
+    "message": "Rate limit exceeded for embedding generation"
+  }
+}
+```
+
+## Business Logic
+1. Validate authentication token (must be build-time token)
+2. Validate each chunk (content length ≤ 500 tokens, required fields present)
+3. Generate OpenAI embeddings for each chunk
+4. Store embeddings in Qdrant with metadata
+5. Batch process up to 100 chunks per request (as per requirements)
+6. Return detailed processing results
+7. Log embedding generation metrics
+
+## Performance Requirements
+- Process up to 100 chunks per request
+- Embedding generation time: < 10 seconds per 100 chunks
+- Qdrant storage time: < 2 seconds per 100 chunks
+- Total processing time: < 15 seconds per batch
+
+## Security Requirements
+- Build-time authentication token required
+- IP whitelisting for build environments
+- Request size limits to prevent abuse
+- Content validation to prevent inappropriate embeddings
+- Rate limiting to prevent excessive API usage

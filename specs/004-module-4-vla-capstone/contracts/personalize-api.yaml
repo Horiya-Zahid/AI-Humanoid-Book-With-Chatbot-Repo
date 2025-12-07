@@ -1,0 +1,205 @@
+# API Contract: Personalization Endpoints
+
+## Endpoints
+- `GET /api/personalize/settings` - Get user personalization settings
+- `POST /api/personalize/settings` - Update user personalization settings
+- `GET /api/personalize/content` - Get personalized content
+
+## Get Settings Endpoint
+`GET /api/personalize/settings`
+
+### Description
+Retrieve the current user's personalization settings for a specific module or all modules.
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ACCESS_TOKEN>
+Content-Type: application/json
+```
+
+#### Query Parameters
+```
+module_id: string, optional - Module ID to get settings for (default: all modules)
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "settings": [
+    {
+      "module_id": "string - Module identifier",
+      "complexity_level": "integer - Complexity level (1-5)",
+      "preferred_language": "string - Preferred language code (default: 'en')",
+      "accessibility_features": {
+        "high_contrast": "boolean - Whether to use high contrast mode",
+        "larger_text": "boolean - Whether to use larger text",
+        "screen_reader_friendly": "boolean - Whether to optimize for screen readers"
+      },
+      "created_at": "string - Creation timestamp",
+      "updated_at": "string - Last update timestamp"
+    }
+  ]
+}
+```
+
+#### Error Response (401 Unauthorized)
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Authentication required or invalid token"
+  }
+}
+```
+
+## Update Settings Endpoint
+`POST /api/personalize/settings`
+
+### Description
+Update the user's personalization settings for a specific module.
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ACCESS_TOKEN>
+Content-Type: application/json
+```
+
+#### Body
+```json
+{
+  "module_id": "string, required - Module identifier",
+  "complexity_level": "integer, optional - Complexity level (1-5)",
+  "preferred_language": "string, optional - Preferred language code",
+  "accessibility_features": "object, optional - Accessibility preferences"
+}
+```
+
+#### Example Request
+```json
+{
+  "module_id": "004-module-4-vla",
+  "complexity_level": 3,
+  "preferred_language": "en",
+  "accessibility_features": {
+    "high_contrast": false,
+    "larger_text": true,
+    "screen_reader_friendly": true
+  }
+}
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "message": "Settings updated successfully",
+  "settings": {
+    "module_id": "string - Module identifier",
+    "complexity_level": "integer - Complexity level (1-5)",
+    "preferred_language": "string - Preferred language code",
+    "accessibility_features": {
+      "high_contrast": "boolean - Whether to use high contrast mode",
+      "larger_text": "boolean - Whether to use larger text",
+      "screen_reader_friendly": "boolean - Whether to optimize for screen readers"
+    },
+    "created_at": "string - Creation timestamp",
+    "updated_at": "string - Last update timestamp"
+  }
+}
+```
+
+#### Error Response (400 Bad Request)
+```json
+{
+  "error": {
+    "type": "validation_error",
+    "message": "string - Validation error description"
+  }
+}
+```
+
+## Get Personalized Content Endpoint
+`GET /api/personalize/content`
+
+### Description
+Get personalized content based on user's settings and preferences.
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ACCESS_TOKEN>
+Content-Type: application/json
+```
+
+#### Query Parameters
+```
+module_id: string, required - Module ID to get personalized content for
+section_path: string, required - Path to the specific section
+complexity_adjustment: integer, optional - Temporary complexity override (1-5)
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "content": {
+    "original_text": "string - Original content",
+    "personalized_text": "string - Personalized content based on settings",
+    "complexity_level": "integer - Applied complexity level",
+    "language": "string - Applied language",
+    "metadata": {
+      "original_word_count": "integer - Original word count",
+      "personalized_word_count": "integer - Personalized word count",
+      "complexity_adjustment_applied": "boolean - Whether complexity adjustment was applied"
+    }
+  }
+}
+```
+
+#### Error Response (401 Unauthorized)
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Authentication required or invalid token"
+  }
+}
+```
+
+#### Error Response (404 Not Found)
+```json
+{
+  "error": {
+    "type": "not_found",
+    "message": "Content not found for the specified module and section"
+  }
+}
+```
+
+## Business Logic
+1. Validate user authentication for all endpoints
+2. Ensure complexity_level is between 1-5
+3. Validate language codes against supported languages
+4. Apply personalization logic to content based on user settings
+5. Cache personalized content for performance
+6. Log personalization usage for analytics
+
+## Performance Requirements
+- Response time: < 500ms for settings retrieval
+- Content personalization: < 1 second
+- Cache personalized content for subsequent requests
+
+## Security Requirements
+- JWT token validation for all endpoints
+- User can only access/update their own settings
+- Input validation for all personalization parameters
+- Rate limiting to prevent abuse of personalization features

@@ -1,0 +1,118 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #7048e8;
+  --ifm-color-primary-dark: #5a36d9;
+  --ifm-color-primary-darker: #522fc7;
+  --ifm-color-primary-darkest: #3e24a3;
+  --ifm-color-primary-light: #8460ed;
+  --ifm-color-primary-lighter: #8e6df0;
+  --ifm-color-primary-lightest: #a78bfa;
+  --ifm-code-font-size: 95%;
+
+  /* Neon accent color */
+  --ifm-color-accent: #39ff14; /* Neon green */
+
+  /* Additional theme colors */
+  --ifm-color-purple-light: #a78bfa;
+  --ifm-color-purple-dark: #5a36d9;
+  --ifm-color-neon: #39ff14;
+}
+
+/* Dark theme overrides */
+[data-theme='dark'] {
+  --ifm-color-primary: #a78bfa;
+  --ifm-color-primary-dark: #8e6df0;
+  --ifm-color-primary-darker: #8460ed;
+  --ifm-color-primary-darkest: #7048e8;
+  --ifm-color-primary-light: #c0b0ff;
+  --ifm-color-primary-lighter: #cbc0ff;
+  --ifm-color-primary-lightest: #e0dcff;
+}
+
+/* Custom styles for VLA module */
+.vla-pipeline-visualization {
+  background: linear-gradient(135deg, var(--ifm-color-primary), var(--ifm-color-purple-light));
+  border: 2px solid var(--ifm-color-accent);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+/* Custom button styles with neon effect */
+.button--neon {
+  background: var(--ifm-color-primary);
+  border: 1px solid var(--ifm-color-accent);
+  box-shadow: 0 0 10px var(--ifm-color-accent);
+  transition: all 0.3s ease;
+}
+
+.button--neon:hover {
+  box-shadow: 0 0 20px var(--ifm-color-accent);
+  transform: translateY(-2px);
+}
+
+/* Accessibility enhancements */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --ifm-color-primary: #5a36d9;
+    --ifm-color-accent: #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus indicators for accessibility */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[tabindex]:focus {
+  outline: 2px solid var(--ifm-color-accent);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ifm-color-emphasis-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ifm-color-primary);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-accent);
+}

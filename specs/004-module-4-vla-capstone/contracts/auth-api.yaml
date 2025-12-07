@@ -1,0 +1,194 @@
+# API Contract: Authentication Endpoints
+
+## Endpoints
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/me` - Get current user info
+
+## Registration Endpoint
+`POST /api/auth/register`
+
+### Description
+Register a new user account with email and password.
+
+### Request
+
+#### Headers
+```
+Content-Type: application/json
+```
+
+#### Body
+```json
+{
+  "email": "string, required - User's email address",
+  "name": "string, required - User's full name",
+  "password": "string, required - User's password (min 8 characters)"
+}
+```
+
+#### Example Request
+```json
+{
+  "email": "user@example.com",
+  "name": "John Doe",
+  "password": "securePassword123"
+}
+```
+
+### Response
+
+#### Success Response (201 Created)
+```json
+{
+  "user": {
+    "id": "string - User ID",
+    "email": "string - User's email",
+    "name": "string - User's name",
+    "created_at": "string - Creation timestamp"
+  },
+  "access_token": "string - JWT access token",
+  "refresh_token": "string - JWT refresh token"
+}
+```
+
+#### Error Response (400 Bad Request)
+```json
+{
+  "error": {
+    "type": "validation_error",
+    "message": "string - Validation error description"
+  }
+}
+```
+
+## Login Endpoint
+`POST /api/auth/login`
+
+### Description
+Authenticate user with email and password.
+
+### Request
+
+#### Headers
+```
+Content-Type: application/json
+```
+
+#### Body
+```json
+{
+  "email": "string, required - User's email address",
+  "password": "string, required - User's password"
+}
+```
+
+#### Example Request
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "user": {
+    "id": "string - User ID",
+    "email": "string - User's email",
+    "name": "string - User's name",
+    "created_at": "string - Creation timestamp"
+  },
+  "access_token": "string - JWT access token",
+  "refresh_token": "string - JWT refresh token"
+}
+```
+
+#### Error Response (401 Unauthorized)
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Invalid email or password"
+  }
+}
+```
+
+## Logout Endpoint
+`POST /api/auth/logout`
+
+### Description
+Logout the current user and invalidate tokens.
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ACCESS_TOKEN>
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "message": "Successfully logged out"
+}
+```
+
+## Get Current User Endpoint
+`GET /api/auth/me`
+
+### Description
+Get information about the currently authenticated user.
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ACCESS_TOKEN>
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "user": {
+    "id": "string - User ID",
+    "email": "string - User's email",
+    "name": "string - User's name",
+    "email_verified": "boolean - Whether email is verified",
+    "created_at": "string - Creation timestamp",
+    "updated_at": "string - Last update timestamp"
+  }
+}
+```
+
+#### Error Response (401 Unauthorized)
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Authentication required or invalid token"
+  }
+}
+```
+
+## Business Logic
+1. Passwords must be hashed using bcrypt or similar
+2. JWT tokens must have appropriate expiration times
+3. Email verification workflow must be implemented
+4. Rate limiting on authentication endpoints
+5. Secure token storage and transmission
+
+## Security Requirements
+- Passwords must be at least 8 characters with complexity requirements
+- JWT tokens must be signed with secure keys
+- Rate limiting to prevent brute force attacks
+- HTTPS required for all authentication endpoints
+- Password reset functionality should be implemented separately

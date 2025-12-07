@@ -1,0 +1,230 @@
+# API Contract: Translation Endpoints
+
+## Endpoints
+- `GET /api/translate/:chunkId/:lang` - Get translated content chunk
+- `POST /api/translate/batch` - Request batch translation of content
+- `GET /api/translate/status/:requestId` - Get translation request status
+
+## Get Translation Endpoint
+`GET /api/translate/:chunkId/:lang`
+
+### Description
+Retrieve a translated version of a specific content chunk in the requested language.
+
+### Path Parameters
+```
+chunkId: string, required - The ID of the content chunk to translate
+lang: string, required - The target language code (e.g., 'ur' for Urdu, 'en' for English)
+```
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ACCESS_TOKEN> (optional for authenticated users)
+```
+
+#### Query Parameters
+```
+fallback: boolean, optional - Whether to fallback to original language if translation not available (default: true)
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "translation": {
+    "chunk_id": "string - Original chunk ID",
+    "source_language": "string - Source language code",
+    "target_language": "string - Target language code",
+    "translated_content": "string - The translated content",
+    "status": "string - Translation status ('published', 'reviewed', 'pending')",
+    "quality_score": "number - Quality score between 0 and 1",
+    "translator_notes": "string - Any notes from the translator",
+    "created_at": "string - Creation timestamp",
+    "updated_at": "string - Last update timestamp"
+  },
+  "metadata": {
+    "original_length": "integer - Length of original content",
+    "translated_length": "integer - Length of translated content",
+    "character_count": "integer - Character count of translated content"
+  }
+}
+```
+
+#### Error Response (404 Not Found)
+```json
+{
+  "error": {
+    "type": "not_found",
+    "message": "Translation not available for the specified chunk and language"
+  }
+}
+```
+
+#### Error Response (400 Bad Request)
+```json
+{
+  "error": {
+    "type": "invalid_request_error",
+    "message": "Invalid language code or chunk ID"
+  }
+}
+```
+
+## Batch Translation Request Endpoint
+`POST /api/translate/batch`
+
+### Description
+Request translation of multiple content chunks at once. This is primarily a build-time or admin endpoint.
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ADMIN_TOKEN> (required - admin authentication)
+Content-Type: application/json
+```
+
+#### Body
+```json
+{
+  "chunks": [
+    {
+      "chunk_id": "string, required - The ID of the content chunk to translate",
+      "content": "string, required - The content to translate",
+      "target_language": "string, required - The target language code"
+    }
+  ],
+  "source_language": "string, optional - Source language code (default: 'en')",
+  "requester_id": "string, optional - ID of the requesting user/admin",
+  "priority": "string, optional - Priority level ('low', 'normal', 'high', 'critical') (default: 'normal')",
+  "callback_url": "string, optional - URL to notify when translations are ready"
+}
+```
+
+#### Example Request
+```json
+{
+  "chunks": [
+    {
+      "chunk_id": "chunk_004_11_1_001",
+      "content": "The vision-language-action pipeline represents the integration of perception, reasoning, and execution in robotic systems...",
+      "target_language": "ur"
+    }
+  ],
+  "source_language": "en",
+  "requester_id": "admin_user_123",
+  "priority": "normal",
+  "callback_url": "https://myapp.com/translation-callback"
+}
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "request_id": "string - Unique ID for the batch translation request",
+  "status": "string - Initial status ('received', 'processing', 'queued')",
+  "total_chunks": "integer - Number of chunks in the request",
+  "target_language": "string - Target language for all translations",
+  "estimated_completion": "string - Estimated completion time in ISO format",
+  "created_at": "string - Request creation timestamp"
+}
+```
+
+#### Error Response (401 Unauthorized)
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Admin authentication required for batch translation requests"
+  }
+}
+```
+
+## Translation Status Endpoint
+`GET /api/translate/status/:requestId`
+
+### Description
+Check the status of a batch translation request.
+
+### Path Parameters
+```
+requestId: string, required - The ID of the batch translation request
+```
+
+### Request
+
+#### Headers
+```
+Authorization: Bearer <ADMIN_TOKEN> (required - admin authentication)
+```
+
+### Response
+
+#### Success Response (200 OK)
+```json
+{
+  "request": {
+    "request_id": "string - Request ID",
+    "status": "string - Current status ('received', 'queued', 'processing', 'completed', 'failed', 'cancelled')",
+    "total_chunks": "integer - Total number of chunks in the request",
+    "completed_chunks": "integer - Number of chunks completed",
+    "failed_chunks": "integer - Number of chunks that failed",
+    "progress_percentage": "number - Completion percentage (0-100)",
+    "target_language": "string - Target language",
+    "created_at": "string - Request creation timestamp",
+    "updated_at": "string - Last status update timestamp",
+    "completed_at": "string - Completion timestamp (null if not completed)"
+  },
+  "details": {
+    "completed_chunk_ids": ["string - Array of completed chunk IDs"],
+    "failed_chunk_ids": [
+      {
+        "chunk_id": "string - Failed chunk ID",
+        "error": "string - Error message for the failure"
+      }
+    ]
+  }
+}
+```
+
+#### Error Response (404 Not Found)
+```json
+{
+  "error": {
+    "type": "not_found",
+    "message": "Translation request not found"
+  }
+}
+```
+
+## Business Logic
+1. Validate language codes against supported languages
+2. Check if translation already exists before generating new one
+3. For Urdu translation, ensure RTL support and proper text direction
+4. Implement translation caching for performance
+5. Validate content length and complexity for translation
+6. Support for fallback to original language if translation unavailable
+7. Admin controls for translation quality review and approval
+
+## Supported Languages
+- `en`: English (default/source language)
+- `ur`: Urdu (bonus feature)
+- Additional languages can be added as needed
+
+## Performance Requirements
+- Translation retrieval: < 300ms
+- Translation generation: < 5 seconds per chunk (for simple content)
+- Batch processing: Process up to 50 chunks per request
+- Cache translated content with appropriate TTL
+
+## Security Requirements
+- Admin authentication required for batch translation requests
+- Rate limiting on translation endpoints
+- Content validation to prevent inappropriate translations
+- User authentication for personalized translation requests
+- Input sanitization to prevent injection attacks

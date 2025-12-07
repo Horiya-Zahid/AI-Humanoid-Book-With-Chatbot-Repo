@@ -1,0 +1,125 @@
+# API Contract: Text Selection Chat Endpoint
+
+## Endpoint
+`POST /api/chat/selection`
+
+## Description
+Handle text selection queries. Processes user-selected text and returns relevant information based on the selected content with proper citations.
+
+## Request
+
+### Headers
+```
+Content-Type: application/json
+Authorization: Bearer <JWT_TOKEN> (optional for authenticated users)
+```
+
+### Body
+```json
+{
+  "selected_text": "string, required - The user-selected text",
+  "original_context": "string, optional - Context around the selected text",
+  "module_id": "string, optional - Module ID to scope search (default: all modules)",
+  "page_url": "string, optional - URL of the page where text was selected",
+  "session_id": "string, optional - Chat session ID for conversation history",
+  "user_id": "string, optional - User ID for personalization"
+}
+```
+
+### Example Request
+```json
+{
+  "selected_text": "vision-language-action pipeline",
+  "original_context": "In robotics, the vision-language-action pipeline integrates perception, reasoning, and execution...",
+  "module_id": "004-module-4-vla",
+  "page_url": "https://example.com/module-4-vla/chapter-3",
+  "session_id": "sess_abc123"
+}
+```
+
+## Response
+
+### Success Response (200 OK)
+```json
+{
+  "id": "string - Unique response ID",
+  "object": "text_completion",
+  "created": "integer - Unix timestamp",
+  "model": "string - Model identifier",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "string - The response content explaining or expanding on the selected text",
+        "sources": [
+          {
+            "module": "string - Module identifier (e.g., 'Module 4')",
+            "week": "string - Week identifier (e.g., 'Week 11')",
+            "section": "string - Section title",
+            "url": "string - Source URL",
+            "text": "string - Relevant text snippet"
+          }
+        ]
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": "integer",
+    "completion_tokens": "integer",
+    "total_tokens": "integer"
+  },
+  "session_id": "string - Updated session ID"
+}
+```
+
+### Error Response (400 Bad Request)
+```json
+{
+  "error": {
+    "type": "invalid_request_error",
+    "message": "string - Error description"
+  }
+}
+```
+
+### Error Response (401 Unauthorized)
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Authentication required or invalid token"
+  }
+}
+```
+
+### Error Response (429 Rate Limit)
+```json
+{
+  "error": {
+    "type": "rate_limit_error",
+    "message": "Rate limit exceeded, please try again later"
+  }
+}
+```
+
+## Business Logic
+1. Validate selected text (non-empty, reasonable length)
+2. If selected text content is not covered in embeddings, return: "This information is not covered in the book."
+3. Perform vector similarity search in Qdrant using selected text and context
+4. Use Google Gemini to generate response that explains or expands on the selected content
+5. Format response with proper citations to relevant sections
+6. Store conversation in session if session_id provided
+7. Log usage metrics
+
+## Performance Requirements
+- Response time: < 3 seconds (95th percentile)
+- Vector search time: < 500ms
+- Must handle up to 100 concurrent users
+
+## Security Requirements
+- Input sanitization to prevent injection attacks
+- Rate limiting per IP/user
+- JWT token validation for authenticated endpoints
+- Text length limits to prevent abuse

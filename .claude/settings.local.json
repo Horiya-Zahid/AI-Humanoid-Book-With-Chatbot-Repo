@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/bash/create-phr.sh:*)",
+      "Bash(git fetch:*)",
+      "Bash(ls -1d specs/*-ros2-module)",
+      "Bash(ls -1d specs/*-*)",
+      "Bash(ls -1d specs/*-digital-twin)",
+      "Bash(ls -1d specs/*-isaac-brain)",
+      "Bash(ls -1d specs/*-vla-capstone)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh --json --paths-only)",
+      "Bash(git checkout -b 004-module-4-vla)",
+      "Bash(.specify/scripts/bash/setup-plan.sh --json)",
+      "Bash(dir .specifyscriptsbashcreate-phr.sh)",
+      "Bash(dir .specifyscriptsbash)",
+      "Bash(dir .specify)",
+      "Bash(dir .specifyscripts)",
+      "Bash(dir \".specify\\scripts\")",
+      "Bash(dir \".specify\\scripts\\bash\")",
+      "Bash(.specifyscriptsbashcreate-phr.sh --title \"Module-4-VLA-Implementation-Plan\" --stage \"plan\" --feature \"004-module-4-vla\" --json)",
+      "Bash(bash .specify/scripts/bash/create-phr.sh --title \"Module-4-VLA-Implementation-Plan\" --stage \"plan\" --feature \"004-module-4-vla\" --json)",
+      "Bash(bash .specify/scripts/bash/create-phr.sh --title \"Module-4-VLA-Implementation-Plan\" --stage \"plan\" --feature \"004-module-4-vla-capstone\" --json)",
+      "Bash(dir \"specs\\004-module-4-vla-capstone\" /s)",
+      "Bash(dir \"specs\\004-module-4-vla-capstone\")",
+      "Bash(dir \"specs\\004-module-4-vla-capstone\\contracts\")",
+      "Bash(dir \"specs\\004-module-4-vla-capstone\\checklists\")",
+      "Bash(.specifyscriptsbashcheck-prerequisites.sh --json)",
+      "Bash(bash .specify/scripts/bash/check-prerequisites.sh --json)",
+      "Bash(bash .specify/scripts/bash/create-phr.sh --title \"Module-4-VLA-Tasks-Generation\" --stage \"tasks\" --feature \"004-module-4-vla-capstone\" --json)",
+      "Bash(bash .specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
+      "Bash(git rev-parse --git-dir)",
+      "Bash(bash .specify/scripts/bash/create-phr.sh --title \"VLA-Module-Implementation-Complete\" --stage \"green\" --feature \"004-module-4-vla-capstone\" --json)",
+      "Bash(dir \"E:\\Ai-book-hackaton\\backend\\src\\api\" /s)",
+      "Bash(dir \"E:\\Ai-book-hackaton\\backend\\src\\api\\routes\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
