@@ -4,7 +4,19 @@
       "Bash(find . -name \"*.md\" -not -path \"./my-website/node_modules/*\" -not -path \"./.git/*\" -exec grep -l \"introduction\\|Introduction\\|Week\\|week\" {} ;)",
       "Bash(tree my-website/docs/)",
       "Bash(dir my-websitedocs /s)",
-      "Bash(dir my-websitesrccss)"
+      "Bash(dir my-websitesrccss)",
+      "Bash(dir my-website)",
+      "Bash(dir my-websitesrc)",
+      "Bash(test -f my-website/src/components/RagChatbot.tsx)",
+      "Bash(.sp)",
+      "SlashCommand(/sp.analyze)",
+      "Bash(dir specs /ad)",
+      "Bash(dir specs /b)",
+      "Bash(dir specs/001-module-1-robotic-nervous-system)",
+      "Bash(bash .specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
+      "Bash(git checkout 004-module-4-vla)",
+      "Bash(npm run start)",
+      "Bash(npx docusaurus start --port 3001)"
     ],
     "deny": [],
     "ask": []

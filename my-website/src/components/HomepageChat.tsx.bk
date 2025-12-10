@@ -1,0 +1,22 @@
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the RagChatbot component with no SSR
+const RagChatbot = dynamic(() => import('./RagChatbot'), {
+  ssr: false,
+});
+
+const HomepageChat: React.FC = () => {
+  const [showChatbot, setShowChatbot] = useState(false);
+
+  useEffect(() => {
+    // Check if we're on the homepage by looking at the current URL
+    const isHomepage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+    setShowChatbot(isHomepage);
+  }, []);
+
+  // Always render the chatbot component but conditionally show it
+  return showChatbot ? <RagChatbot /> : null;
+};
+
+export default HomepageChat;
