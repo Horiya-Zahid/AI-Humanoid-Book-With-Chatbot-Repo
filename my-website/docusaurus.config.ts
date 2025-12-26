@@ -9,7 +9,7 @@ const config: Config = {
 
   future: { v4: true },
 
-  url: 'https://your-physical-ai-book-site.example.com',
+  url: 'https://ai-humanoid-book-with-chat-mywebsit.vercel.app/',
   baseUrl: '/',
 
   organizationName: 'your-org',
